@@ -1,0 +1,31 @@
+CFLAGS=-c -std=c99 -Wall
+DLLFLAGS=-L./ -Wl,-rpath,./
+
+all: encoder decoder
+
+encoder: encoder.o libstrings.so libcrypto.so
+	gcc -o encoder encoder.o $(DLLFLAGS) -lstrings -lcrypto
+
+decoder: decoder.o libstrings.so libcrypto.so
+	gcc -o decoder encoder.o $(DLLFLAGS) -lstrings -lcrypto 
+
+libstrings.so: strings.o
+	gcc -shared -o libstrings.so strings.o
+
+libcrypto.so: crypto.o
+	gcc -shared -o libcrypto.so crypto.o
+
+encoder.o: encoder.c
+	gcc $(CFLAGS) encoder.c
+
+decoder.o: decoder.c
+	gcc $(CFLAGS) decoder.c
+
+strings.o: strings.c
+	gcc $(CFLAGS) -fPIC strings.c
+
+crypto.o: crypto.c
+	gcc $(CFLAGS) -fPIC crypto.c
+
+clean: 
+	rm -rf *.o *.so encoder decoder
