@@ -251,26 +251,36 @@ bool containsOnly(bool (*callback)(char sym), const char* str) {
 	return true;
 }
 
-bool isAlpha(const char sym) {
+
+/**
+ * @param sym символ для проверки.
+ * @return Возвращает true, если sym является латинской буквой, иначе false.
+*/
+static bool isAlpha(const char sym) {
 	char* s = immutableToLower(&sym);
 	bool isLower = isLowerAlpha(*s);
 	free(s);
 	return isLower;
 }
 
-bool isUpperAlpha(const char sym) {
+
+static bool isUpperAlpha(const char sym) {
 	return sym >= 'A' && sym <= 'Z';
 
 }
-bool isLowerAlpha(const char sym) {
+
+
+static bool isLowerAlpha(const char sym) {
 	return sym >= 'a' && sym <= 'z';
 }
 
-bool isDigit(const char sym) {
+
+static bool isDigit(const char sym) {
 	return sym >= '0' && sym <= '9';
 }
 
-bool isSpace(const char sym) {
+
+static bool isSpace(const char sym) {
 	return sym == ' ';
 }
 

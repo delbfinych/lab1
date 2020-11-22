@@ -21,41 +21,6 @@ char* copyString(const char* str);
 
 
 /**
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является латинской буквой, иначе false.
-*/
-bool isAlpha(const char sym);
-
-
-/** 
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является латинской буквой в верхнем регистре, иначе false.
-*/
-bool isUpperAlpha(const char sym);
-
-
-/**
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является латинской буквой в нижнем регистре, иначе false.
-*/
-bool isLowerAlpha(const char sym);
-
-
-/**
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является десятичной цифрой, иначе false.
-*/
-bool isDigit(const char sym);
-
-
-/**
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является пробелом, иначе false.
-*/
-bool isSpace(const char sym);
-
-
-/**
  * @param callback функция, которая будет вызвана для каждого символа строки.
  * Если функция возвращает true, то символ подходит под выборку, если false, то не подходит.
  * @param str строка для проверки.
