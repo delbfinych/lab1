@@ -5,6 +5,34 @@
 
 #include "strings.h"
 
+/**
+ * @param sym символ для проверки.
+ * @return Возвращает true, если sym является латинской буквой, иначе false.
+*/
+
+static bool isUpperAlpha(const char sym) {
+	return sym >= 'A' && sym <= 'Z';
+
+}
+
+static bool isLowerAlpha(const char sym) {
+	return sym >= 'a' && sym <= 'z';
+}
+
+static bool isDigit(const char sym) {
+	return sym >= '0' && sym <= '9';
+}
+
+static bool isSpace(const char sym) {
+	return sym == ' ';
+}
+
+static bool isAlpha(const char sym) {
+	char* s = immutableToLower(&sym);
+	bool isLower = isLowerAlpha(*s);
+	free(s);
+	return isLower;
+}
 
 char* createString(const size_t size) {
 	return (char*)malloc(sizeof(char)*size);
@@ -252,39 +280,38 @@ bool containsOnly(bool (*callback)(char sym), const char* str) {
 }
 
 
-/**
- * @param sym символ для проверки.
- * @return Возвращает true, если sym является латинской буквой, иначе false.
-*/
-static bool isAlpha(const char sym) {
-	char* s = immutableToLower(&sym);
-	bool isLower = isLowerAlpha(*s);
-	free(s);
-	return isLower;
-}
-
-
-static bool isUpperAlpha(const char sym) {
-	return sym >= 'A' && sym <= 'Z';
-
-}
-
-
-static bool isLowerAlpha(const char sym) {
-	return sym >= 'a' && sym <= 'z';
-}
-
-
-static bool isDigit(const char sym) {
-	return sym >= '0' && sym <= '9';
-}
-
-
-static bool isSpace(const char sym) {
-	return sym == ' ';
-}
-
 bool isEmpty(const char* str) {
 	return str == NULL || str[0] == '\0';
+}
+
+int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
+	if (isEmpty(str) || isEmpty(searchStr)) {
+		return -1;
+	}
+
+	const char* tempStr = isSensitive ? str : immutableToLower(str);
+	const char* tempSubstr = isSensitive ? searchStr : immutableToLower(searchStr);
+
+	size_t count = 0;
+	const size_t substrSize = strlen(searchStr); 
+	int pos = -1;
+	for (size_t i = 0; tempStr[i] != '\0'; ++i) {
+		if (tempStr[i] == tempSubstr[count]) {
+			count++;
+		}
+		// Попытка вернуться назад 
+		else if (tempStr[i] != tempSubstr[count - 1]) {
+			count = 0;
+		}
+		if (count == substrSize) {
+			pos = i - count + 1;
+			break;
+		}
+	}
+	if (!isSensitive) {
+		free(tempStr);
+		free(tempSubstr);
+	}
+	return pos;
 }
 
