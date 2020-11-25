@@ -89,19 +89,18 @@ void mutableFilter(char* str) {
 	if (isEmpty(str)) {
 		 return;
 	}
-
-	char* temp = createString(strlen(str) + 1);
-
 	size_t count = 0;
+	size_t result = 0;
 	for (size_t i = 0; str[i] != '\0'; ++i) {
 		if (isAlpha(str[i]) || isDigit(str[i]) || isSpace(str[i])) {
-			temp[count++] = str[i];
-		}
+			str[result++] = str[i];
+		}	
+		else {
+			++count;
+			continue;
+		}	
 	}
-	
-	strncpy(str, temp, count);
-	str[count] = '\0';
-	free(temp);
+	str[strlen(str) - count] = '\0';
 }
 
 char* immutableFilter(const char* str) {
