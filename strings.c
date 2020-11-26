@@ -5,6 +5,32 @@
 
 #include "strings.h"
 
+
+/**
+ * @brief Удаляет указанные символы из строки. Изменяет содержимое str.
+ * @param str строка, которую нужно очистить.
+ * @param callback функция, которая будет вызвана для каждого символа строки.
+ * Если функция возвращает true, то символ удаляется, если false, то остаётся.
+*/
+static void eraseRemove(char* str, bool (*callback)(char)) {
+	if (isEmpty(str) || callback == NULL) {
+		 return;
+	}
+	size_t count = 0;
+	size_t result = 0;
+	for (size_t i = 0; str[i] != '\0'; ++i) {
+		if (!callback(str[i])) {
+			str[result++] = str[i];
+		}	
+		else {
+			++count;
+			continue;
+		}	
+	}
+	str[strlen(str) - count] = '\0';
+}
+
+
 /**
  * @param sym символ для проверки.
  * @return Возвращает true, если sym является латинской буквой, иначе false.
@@ -85,23 +111,18 @@ char* immutableToLower(const char* str) {
 	return newStr;
 }
 
+
+
+static bool mutableFilterTest(const char sym) {
+	return !(isAlpha(sym) || isDigit(sym) || isSpace(sym));
+}
 void mutableFilter(char* str) {
 	if (isEmpty(str)) {
 		 return;
 	}
-	size_t count = 0;
-	size_t result = 0;
-	for (size_t i = 0; str[i] != '\0'; ++i) {
-		if (isAlpha(str[i]) || isDigit(str[i]) || isSpace(str[i])) {
-			str[result++] = str[i];
-		}	
-		else {
-			++count;
-			continue;
-		}	
-	}
-	str[strlen(str) - count] = '\0';
+	eraseRemove(str, mutableFilterTest);
 }
+
 
 char* immutableFilter(const char* str) {
 	char* result = copyString(str);
@@ -156,21 +177,7 @@ void mutableRemoveSpaces(char* str) {
 	if (isEmpty(str)) { 
 		return; 
 	}
-
-	size_t count = 0;
-	mutableStrip(str, ' ');
-
-	char* temp = createString(strlen(str));
-	
-	for (size_t i = 0; str[i] != '\0'; ++i) {
-		if (!isSpace(str[i])) {
-			temp[count++] = str[i];
-		}
-	}
-
-	strncpy(str, temp, count);
-	str[count] = '\0';
-	free(temp);
+	eraseRemove(str, isSpace);
 }
 
 char* immutableRemoveSpaces(const char* str) {
@@ -262,7 +269,7 @@ bool isWord(const char* str) {
 }
 
 bool containsOnly(bool (*callback)(char sym), const char* str) {
-	if (isEmpty(str)) { 
+	if (isEmpty(str) || callback == NULL) { 
 		return false; 
 	}
 	
