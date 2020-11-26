@@ -27,7 +27,8 @@ static void eraseRemove(char* str, bool (*callback)(char)) {
 			continue;
 		}	
 	}
-	str[strlen(str) - count] = '\0';
+	
+	str[result] = '\0';
 }
 
 
