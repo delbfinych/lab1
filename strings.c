@@ -16,16 +16,12 @@ static void eraseRemove(char* str, bool (*callback)(char)) {
 	if (isEmpty(str) || callback == NULL) {
 		 return;
 	}
-	size_t count = 0;
+
 	size_t result = 0;
 	for (size_t i = 0; str[i] != '\0'; ++i) {
 		if (!callback(str[i])) {
 			str[result++] = str[i];
-		}	
-		else {
-			++count;
-			continue;
-		}	
+		}		
 	}
 	
 	str[result] = '\0';
