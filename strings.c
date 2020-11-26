@@ -140,14 +140,10 @@ void mutableStrip(char* str, const char sym) {
 		return;
 	}
 
-	char* temp = copyString(str);
-
 	const size_t count = rightIdx - leftIdx + 1; 
 
-	strncpy(str, temp + leftIdx, count);
+	strncpy(str, str + leftIdx, count);
 	str[count] = '\0';
-	free(temp);
-
 }
 
 char* immutableStrip(const char* str, char sym) {
