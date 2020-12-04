@@ -2,14 +2,14 @@
 #define STRINGS_H
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include <stdio.h>
 
 /**
  * @brief Выделяет память для хранения строки длины size.
  * @param size размер строки вместе с нуль-терминатором.
  * @return Возвращает указатель на выделенную память.
 */
-char* createString(const size_t size);
+char* createString(size_t size);
 
 
 /**
@@ -58,11 +58,12 @@ bool isWord(const char* str);
 
 
 /**
- * @brief Читает поток stdin до символа перевода строки. При этом перед считыванием выводит сообщение в консоль.
+ * @brief Читает поток stream до символа перевода строки. При этом перед считыванием выводит сообщение в консоль.
  * @param message сообщение для отображения в консоли.
+ * @param stream поток для чтения
  * @return Возвращает указатель на считанную строку.
 */
-char* input(const char* message);
+char* input(const char* message, FILE* stream);
 
 
 /**
@@ -72,7 +73,7 @@ char* input(const char* message);
  * @param callback функция, которая будет вызвана для каждого символа строки.
  * Если функция возвращает true, то символ будет сдвинут, если false, то символ не будет сдвинут.
 */
-void shiftString(char* str, const int offset, bool (*callback)(char sym));
+void shiftString(char* str, int offset, bool (*callback)(char sym));
 
 
 /**

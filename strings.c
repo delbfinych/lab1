@@ -12,7 +12,7 @@
  * @param callback функция, которая будет вызвана для каждого символа строки.
  * Если функция возвращает true, то символ удаляется, если false, то остаётся.
 */
-static void eraseRemove(char* str, bool (*callback)(char)) {
+static void removeIf(char* str, bool (*callback)(char)) {
 	if (isEmpty(str) || callback == NULL) {
 		 return;
 	}
@@ -57,7 +57,7 @@ static bool isAlpha(const char sym) {
 	return isLower;
 }
 
-char* createString(const size_t size) {
+char* createString(size_t size) {
 	return (char*)malloc(sizeof(char)*size);
 }
 
@@ -87,7 +87,7 @@ void mutableToLower(char* str) {
 	shiftString(str, offset, isUpperAlpha);
 }
 
-void shiftString(char* str, const int offset, bool (*callback)(char sym)) {
+void shiftString(char* str, int offset, bool (*callback)(char sym)) {
 	while (str != NULL && *str != '\0') {
 		if (callback == NULL || callback(*str)) {
 			*str += offset;
@@ -117,7 +117,7 @@ void mutableFilter(char* str) {
 	if (isEmpty(str)) {
 		 return;
 	}
-	eraseRemove(str, mutableFilterTest);
+	removeIf(str, mutableFilterTest);
 }
 
 
@@ -174,7 +174,7 @@ void mutableRemoveSpaces(char* str) {
 	if (isEmpty(str)) { 
 		return; 
 	}
-	eraseRemove(str, isSpace);
+	removeIf(str, isSpace);
 }
 
 char* immutableRemoveSpaces(const char* str) {
@@ -183,7 +183,7 @@ char* immutableRemoveSpaces(const char* str) {
 	return result;
 }
 
-static char* _inputString() {
+static char* _inputString(FILE* stream) {
 	const int chunk = 4;
 	char* str = NULL;
 	char buffer[chunk];
@@ -191,13 +191,13 @@ static char* _inputString() {
 	size_t bufferLen = 0;
 
 	do {
-		if (fgets(buffer, chunk, stdin)) {
+		if (fgets(buffer, chunk, stream)) {
 			bufferLen = strlen(buffer);
 			str = (char*)realloc(str, sizeof(char)*(strLen + bufferLen + 1));
 			strncpy(str + strLen, buffer, bufferLen);
 			strLen += bufferLen;
 		}
-	} while (str[strlen(str) - 1] != '\n');
+	} while (str[strLen - 1] != '\n');
 	
 	char* s = createString(strLen);
 	strncpy(s, str, strLen - 1);
@@ -206,9 +206,9 @@ static char* _inputString() {
 	return s;
 }
 
-char* input(const char* message) {
+char* input(const char* message, FILE* stream) {
 	printf("%s", message);
-	return _inputString();
+	return _inputString(stream);
 }
 
 
