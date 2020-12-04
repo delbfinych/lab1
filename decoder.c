@@ -5,7 +5,6 @@
 #include "crypto.h"
 #include "strings.h"
 
-
 typedef enum {
 	CommandLineMode = 4,
 	StdinMode = 1 
@@ -15,7 +14,7 @@ void run(Mode mode, char** argv);
 
 
 int main(int argc, char** argv) {
-
+	
 	Mode mode = argc;
 	switch (mode) {
 		case CommandLineMode: {
@@ -36,19 +35,19 @@ int main(int argc, char** argv) {
 
 void run(Mode mode, char** argv) {
 	char* method = mode == CommandLineMode ? copyString(argv[1]) 
-                                           : input("Print method: caesar or xor: ");
+                                           : input("Print method: caesar or xor: ", stdin);
 	mutableStrip(method, '-');
 
 
 	char* text = mode == CommandLineMode ? copyString(argv[2])
-										 : input("Print text to decrypt: ");
+										 : input("Print text to decrypt: ", stdin);
 
 	
 	char* decrypted = NULL;
 
 	if (strcmp(method, "xor") == 0) {
 		char* password =  mode == CommandLineMode ? copyString(argv[3])
-												  : input("Print password: ");
+												  : input("Print password: ", stdin);
 												  
 		decrypted = xor_decrypt(text, password);
 		printf("Result: %s\n", decrypted);
@@ -56,7 +55,7 @@ void run(Mode mode, char** argv) {
 	}
 	else if (strcmp(method, "caesar") == 0) {
 		char* offset = mode == CommandLineMode ? copyString(argv[3]) 
-											   : input("Print offset: ");
+											   : input("Print offset: ", stdin);
 
 		if(isInteger(offset)) {
 			decrypted = caesar_decrypt(text, atoi(offset));

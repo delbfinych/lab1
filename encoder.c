@@ -35,12 +35,12 @@ int main(int argc, char** argv) {
 
 void run(Mode mode, char** argv) {
 	char* method = mode == CommandLineMode ? copyString(argv[1]) 
-                                           : input("Print method: caesar or xor: ");
+                                           : input("Print method: caesar or xor: ", stdin);
 	mutableStrip(method, '-');
 
 
 	char* text = mode == CommandLineMode ? copyString(argv[2])
-										 : input("Print text to encrypt: ");
+										 : input("Print text to encrypt: ", stdin);
 
 	mutableStrip(text, ' ');
 	mutableToLower(text);
@@ -49,7 +49,7 @@ void run(Mode mode, char** argv) {
 
 	if (strcmp(method, "xor") == 0) {
 		char* password =  mode == CommandLineMode ? copyString(argv[3])
-												  : input("Print password: ");
+												  : input("Print password: ", stdin);
 												  
 		encrypted = xor_encrypt(text, password);
 		printf("Result: %s\n", encrypted);
@@ -57,7 +57,7 @@ void run(Mode mode, char** argv) {
 	}
 	else if (strcmp(method, "caesar") == 0) {
 		char* offset = mode == CommandLineMode ? copyString(argv[3]) 
-											   : input("Print offset: ");
+											   : input("Print offset: ", stdin);
 	
 		if(isInteger(offset)) {
 			encrypted = caesar_encrypt(text, atoi(offset));
