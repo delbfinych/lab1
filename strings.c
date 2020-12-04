@@ -197,6 +197,9 @@ static char* _inputString(FILE* stream) {
 			strncpy(str + strLen, buffer, bufferLen);
 			strLen += bufferLen;
 		}
+		else {
+		    return NULL;
+		}
 	} while (str[strLen - 1] != '\n');
 	
 	char* s = createString(strLen);
