@@ -198,7 +198,7 @@ static char* _inputString(FILE* stream) {
 			strLen += bufferLen;
 		}
 		else {
-		    return NULL;
+		    return str;
 		}
 	} while (str[strLen - 1] != '\n');
 	
