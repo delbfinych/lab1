@@ -3,7 +3,7 @@
 
 #include "strings.h"
 
-char* xor_encrypt(const char* str, const char* password) {
+char* xorEncrypt(const char* str, const char* password) {
 	const size_t len = strlen(password);
 	char* result = copyString(str);
 
@@ -13,16 +13,16 @@ char* xor_encrypt(const char* str, const char* password) {
 	return result;
 }
 
-char* xor_decrypt(const char* str, const char* password) {
-	return xor_encrypt(str, password);
+char* xorDecrypt(const char* str, const char* password) {
+	return xorEncrypt(str, password);
 }
 
-char* caesar_encrypt(const char* str, const int offset) {
+char* caesarEncrypt(const char* str, const int offset) {
 	char* result = copyString(str);
 	shiftString(result, offset, NULL);
 	return result;
 }
 
-char* caesar_decrypt(const char* str, const int offset) {
-	return caesar_encrypt(str, -offset);
+char* caesarDecrypt(const char* str, const int offset) {
+	return caesarEncrypt(str, -offset);
 }

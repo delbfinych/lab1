@@ -8,7 +8,7 @@
  * @param offset ключ.
  * @return Возвращает зашифрованную строку.
 */
-char* caesar_encrypt(const char* str, const int offset);
+char* caesarEncrypt(const char* str, const int offset);
 
 
 /**
@@ -17,7 +17,7 @@ char* caesar_encrypt(const char* str, const int offset);
  * @param offset ключ.
  * @return Возвращает дешифрованную строку.
 */
-char* caesar_decrypt(const char* str, const int offset);
+char* caesarDecrypt(const char* str, const int offset);
 
 
 /**
@@ -26,7 +26,7 @@ char* caesar_decrypt(const char* str, const int offset);
  * @param password пароль.
  * @return Возвращает зашифрованную строку.
 */
-char* xor_encrypt(const char* str, const char* password);
+char* xorEncrypt(const char* str, const char* password);
 
 
 /**
@@ -35,6 +35,6 @@ char* xor_encrypt(const char* str, const char* password);
  * @param password пароль.
  * @return Возвращает дешифрованную строку.
 */
-char* xor_decrypt(const char* str, const char* password);
+char* xorDecrypt(const char* str, const char* password);
 
 #endif
