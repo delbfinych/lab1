@@ -49,7 +49,7 @@ void run(Mode mode, char** argv) {
 		char* password =  mode == CommandLineMode ? copyString(argv[3])
 												  : input("Print password: ", stdin);
 												  
-		decrypted = xor_decrypt(text, password);
+		decrypted = xorDecrypt(text, password);
 		printf("Result: %s\n", decrypted);
 		free(password);
 	}
@@ -58,7 +58,7 @@ void run(Mode mode, char** argv) {
 											   : input("Print offset: ", stdin);
 
 		if(isInteger(offset)) {
-			decrypted = caesar_decrypt(text, atoi(offset));
+			decrypted = caesarDecrypt(text, atoi(offset));
 		}
 		else {
 			printf("error: Offset must be an integer number, you have passed [%s]\n", offset);
