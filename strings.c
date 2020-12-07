@@ -291,8 +291,8 @@ int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
 		return -1;
 	}
 
-	const char* tempStr = isSensitive ? str : immutableToLower(str);
-	const char* tempSubstr = isSensitive ? searchStr : immutableToLower(searchStr);
+	char* tempStr = isSensitive ? copyString(str) : immutableToLower(str);
+	char* tempSubstr = isSensitive ? copyString(searchStr) : immutableToLower(searchStr);
 
 	size_t count = 0;
 	const size_t substrSize = strlen(searchStr); 
@@ -310,10 +310,8 @@ int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
 			break;
 		}
 	}
-	if (!isSensitive) {
-		free(tempStr);
-		free(tempSubstr);
-	}
+	free(tempStr);
+	free(tempSubstr);
 	return pos;
 }
 
