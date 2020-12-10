@@ -296,20 +296,29 @@ int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
 
 	size_t count = 0;
 	const size_t substrSize = strlen(searchStr); 
+	const size_t strSize = strlen(str); 
 	int pos = -1;
-	for (size_t i = 0; tempStr[i] != '\0'; ++i) {
-		if (tempStr[i] == tempSubstr[count]) {
-			count++;
+	bool isFound = false;
+	for (int i = strSize - 1; i >= 0; --i) {
+		for (size_t j = i; j < strSize; ++j) {
+			if (tempStr[j] == tempSubstr[count]) {
+				count++;
+			}
+			else {
+				count = 0;
+				break;
+			}
+			if (count == substrSize) {
+				isFound = true;
+				break;
+			}
 		}
-		// Попытка вернуться назад 
-		else if (tempStr[i] != tempSubstr[count - 1]) {
-			count = 0;
-		}
-		if (count == substrSize) {
-			pos = i - count + 1;
+		if (isFound) {
+			pos = i;
 			break;
 		}
 	}
+
 	free(tempStr);
 	free(tempSubstr);
 	return pos;
