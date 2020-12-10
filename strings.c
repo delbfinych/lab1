@@ -298,7 +298,6 @@ int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
 	const size_t substrSize = strlen(searchStr); 
 	const size_t strSize = strlen(str); 
 	int pos = -1;
-	bool isFound = false;
 	for (int i = strSize - 1; i >= 0; --i) {
 		for (size_t j = i; j < strSize; ++j) {
 			if (tempStr[j] == tempSubstr[count]) {
@@ -307,16 +306,12 @@ int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive) {
 			else {
 				break;
 			}
-			if (count == substrSize) {
-				isFound = true;
-				break;
-			}
 		}
-		count = 0;
-		if (isFound) {
+		if (count == substrSize) {
 			pos = i;
 			break;
 		}
+		count = 0;
 	}
 
 	free(tempStr);
