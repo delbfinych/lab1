@@ -20,14 +20,6 @@ char* createString(size_t size);
 char* copyString(const char* str);
 
 
-/**
- * @param callback функция, которая будет вызвана для каждого символа строки.
- * Если функция возвращает true, то символ подходит под выборку, если false, то не подходит.
- * @param str строка для проверки.
- * @return Возвращает true, если str состоит из указанных в callback символов, иначе false.
-*/
-bool containsOnly(bool (*callback)(char sym), const char* str);
-
 
 /**
  * @param str строка для проверки.

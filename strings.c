@@ -57,6 +57,28 @@ static bool isAlpha(const char sym) {
 	return isLower;
 }
 
+
+
+/**
+ * @param callback функция, которая будет вызвана для каждого символа строки.
+ * Если функция возвращает true, то символ подходит под выборку, если false, то не подходит.
+ * @param str строка для проверки.
+ * @return Возвращает true, если str состоит из указанных в callback символов, иначе false.
+*/
+static bool containsOnly(bool (*callback)(char sym), const char* str) {
+	if (isEmpty(str) || callback == NULL) { 
+		return false; 
+	}
+	
+	for (size_t i = 0; str[i] != '\0'; ++i) {
+		if (!callback(str[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
 char* createString(size_t size) {
 	return (char*)malloc(sizeof(char)*size);
 }
@@ -268,18 +290,6 @@ bool isWord(const char* str) {
 	return containsOnly(isAlpha, str);
 }
 
-bool containsOnly(bool (*callback)(char sym), const char* str) {
-	if (isEmpty(str) || callback == NULL) { 
-		return false; 
-	}
-	
-	for (size_t i = 0; str[i] != '\0'; ++i) {
-		if (!callback(str[i])) {
-			return false;
-		}
-	}
-	return true;
-}
 
 
 bool isEmpty(const char* str) {
