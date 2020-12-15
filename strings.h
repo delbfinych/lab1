@@ -150,7 +150,7 @@ char* immutableRemoveSpaces(const char* str);
  * @param str строка, в которой ведётся поиск.
  * @param searchStr искомая подстрока.
  * @param isSensitive если указано true, то поиск будет регистрозависимым.
- * @return Возвращает первый индекс, с которого начинается подстрока, если подстроки не найдено, возвращает -1.
+ * @return Возвращает последний индекс, с которого начинается подстрока, если подстроки не найдено, возвращает -1.
 */
 int getIndexOfSubstr(const char* str, const char* searchStr, bool isSensitive);
 
